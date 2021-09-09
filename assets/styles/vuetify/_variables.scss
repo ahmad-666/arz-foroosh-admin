@@ -1,0 +1,19 @@
+@font-face {
+   src: url('~/assets/fonts/iransans.ttf');
+   font-family: iranSans;
+}
+
+
+$body-font-family: iranSans, 'Roboto', sans-serif;
+$title-font: iranSans, 'Roboto', sans-serif;
+
+$grid-breakpoints: (
+  'xs': 0,
+  'sm': 500px,
+  'md': 750px,
+  'lg': 1100px - 16px,
+  'xl': 1500px - 16px,
+);
+$list-item-padding: 0 4px;
+$list-item-action-icon-margin: 0px;
+// $btn-border-radius: 25px;

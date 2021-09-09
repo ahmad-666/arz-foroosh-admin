@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  &::before,
+  &::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+}
+
+html {
+  overflow-y: initial !important;
+  overflow-x: initial !important;
+}
+html,
+body {
+  height: 100%;
+}
+
+body {
+  font-size: 10px;
+  overflow-x: hidden;
+}
+body.hide-scroll {
+  overflow: hidden;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+ul {
+  list-style: none;
+}
+button {
+  border: none;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
+}
+input,
+textarea {
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+input[type='number'],
+input[type='email'],
+input[type='tel'] {
+  direction: ltr;
+}
+body .v-application p {
+  margin-bottom: 0px;
+}
+.v-list-item__title,
+.v-list-item__subtitle {
+  white-space: initial !important;
+}
+.container {
+  max-width: initial !important;
+}
+.vpd-days {
+  color: rgb(80, 80, 80) !important;
+  font-size: 12px !important;
+}
+.theme--dark {
+  .vpd-input-group input {
+    color: rgb(240, 240, 240) !important;
+    font-size: 14px !important;
+  }
+}
+.theme--light {
+  .vpd-input-group input {
+    color: rgb(80, 80, 80) !important;
+    font-size: 14px !important;
+  }
+}
+.vpd-body {
+  .vpd-month-label > span:not(:hover) {
+    border-color: orange !important;
+    border-top-color: orange !important;
+    border-right-color: orange !important;
+    border-bottom-color: orange !important;
+    border-left-color: orange !important;
+    color: orange !important;
+  }
+}
+.step-calendar,
+.result-calendar {
+  .vpd-input-group {
+    display: none !important;
+  }
+  .vpd-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.vue-slider-process {
+  background-color: orange !important;
+}
+.vue-slider-dot-tooltip-inner {
+  background-color: orange !important;
+  border-color: orange !important;
+}
+
+@media screen and (max-width: 1100px) {
+  body {
+    font-size: 8px;
+  }
+}
+@media screen and (max-width: 750px) {
+  body {
+    font-size: 7px;
+  }
+}
