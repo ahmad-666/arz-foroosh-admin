@@ -57,12 +57,14 @@
                         </v-col>
                         <v-col cols="12">
                           <v-text-field
+                            ref="amountElm"
                             v-model="withdraw.amount"
                             type="number"
                             dense
                             outlined
                             label="مقدار درخواستی"
                             :rules="[formRuleIsRequired]"
+                            validate-on-blur
                           >
                           </v-text-field>
                           <div :style="{ width: '200px', 'max-width': '100%' }">
@@ -320,7 +322,11 @@ export default {
       immediate: true,
       handler(val) {
         if (!val) this.withdraw.amount = null
-        else this.withdraw.amount = this.stock
+        else {
+          this.withdraw.amount = this.stock
+          this.$refs.amountElm.focus()
+          this.$refs.amountElm.blur()
+        }
       },
     },
   },
