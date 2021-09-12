@@ -168,9 +168,9 @@ export default {
               route: '/deposit',
             },
             {
-              id: 'harvest',
+              id: 'withdraw',
               text: 'برداشت',
-              route: '/harvest',
+              route: '/withdraw',
             },
             {
               id: 'transactions',

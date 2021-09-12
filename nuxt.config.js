@@ -4,8 +4,8 @@ export default {
   mode: 'universal',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - bime',
-    title: 'bime',
+    titleTemplate: '%s - arz foroosh',
+    title: 'arz foroosh',
     htmlAttrs: {
       lang: 'en',
     },

@@ -1,7 +1,7 @@
 <template>
   <v-card elevation="0" color="cardColor darken-1">
     <v-card-title class="titleColor--text text-body-2 font-weight-bold"
-      >لیست کارت های بانکی ثبت شده</v-card-title
+      >لیست شماره های کارتی ثبت شده</v-card-title
     >
     <v-card-text>
       <template v-for="(item, i) in items">
@@ -11,105 +11,68 @@
               <v-col cols="12" md="6">
                 <div
                   class="
-                    width-100
                     fill-height
-                    d-flex
-                    align-center
-                    justify-center
                     cardColor
-                    textColor--text
-                    text-body-2
                     pa-2
+                    d-flex
+                    justify-center
+                    align-center
                   "
                 >
-                  {{ item.card }}
+                  <p class="text-body-2 textColor--text">{{ item.card }}</p>
                 </div>
               </v-col>
               <v-col cols="3" md="1">
                 <v-dialog width="400" max-width="90vw">
                   <template #activator="{ on: dOn, attrs: dAttrs }">
-                    <v-tooltip color="cardColor darken-2" bottom>
+                    <v-tooltip bottom color="cardColor darken-2">
                       <template #activator="{ on: tOn, attrs: tAttrs }">
                         <v-btn
                           class="width-100"
-                          v-bind="{ ...tAttrs, ...dAttrs }"
-                          color="info"
+                          color="error"
                           dark
-                          :style="{ 'min-width': '0px', height: '100%' }"
-                          v-on="{ ...tOn, ...dOn }"
-                          @click="setActiveCard(item)"
+                          v-bind="{ ...dAttrs, ...tAttrs }"
+                          :loading="loading"
+                          :style="{ height: '100%', 'min-width': '0px' }"
+                          v-on="{ ...dOn, ...tOn }"
                         >
-                          <v-icon size="20">mdi-pencil-outline</v-icon>
+                          <v-icon size="20">mdi-close</v-icon>
                         </v-btn>
                       </template>
                       <p class="text-caption titleColor--text">
-                        ویرایش شماره کارت
+                        پاک کردن شماره کارت
                       </p>
                     </v-tooltip>
                   </template>
                   <template #default="dialog">
-                    <v-card color="cardColor">
-                      <v-card-title
-                        class="pa-2 d-flex justify-space-between align-center"
-                      >
-                        <p class="text-body-2 titleColor--text font-weight-2">
-                          ویرایش شماره کارت
-                        </p>
-                        <v-btn text color="error" @click="dialog.value = false">
+                    <v-card color="cardColor darken-1">
+                      <v-card-title class="pa-0">
+                        <v-btn
+                          small
+                          text
+                          color="error"
+                          @click="dialog.value = false"
+                        >
                           <v-icon size="20">mdi-close</v-icon>
                         </v-btn>
                       </v-card-title>
-                      <v-card-text>
-                        <v-form
-                          ref="editForm"
-                          v-model="editCardForm.validity"
-                          @submit.prevent="editCardHandler(item)"
-                        >
-                          <v-text-field
-                            v-model="editCardForm.card"
-                            v-mask="'####-####-####-####'"
-                            label="شماره حساب"
-                            dense
-                            outlined
-                            :rules="[formRuleIsCreditCard]"
-                          ></v-text-field>
-                          <v-btn
-                            type="submit"
-                            color="primary"
-                            dark
-                            class="mt-2 mx-auto d-block"
-                            :loading="loading"
-                          >
-                            ویرایش شماره کارت
-                          </v-btn>
-                        </v-form>
+                      <v-card-text class="mt-2 text-body-2 titleColor--text">
+                        آیا اطمینان دارید که میخواهید شماره کارت را پاک کنید ؟
                       </v-card-text>
+                      <v-card-actions>
+                        <v-btn
+                          color="error"
+                          dark
+                          class="mx-auto d-block"
+                          @click="deleteCardHandler(item)"
+                          >پاک کردن</v-btn
+                        >
+                      </v-card-actions>
                     </v-card>
                   </template>
                 </v-dialog>
               </v-col>
-              <v-col cols="3" md="1">
-                <v-tooltip bottom color="cardColor darken-2">
-                  <template #activator="{ on, attrs }">
-                    <v-btn
-                      class="width-100"
-                      color="error"
-                      dark
-                      v-bind="attrs"
-                      :loading="loading"
-                      :style="{ height: '100%', 'min-width': '0px' }"
-                      v-on="on"
-                      @click="deleteCardHandler(item)"
-                    >
-                      <v-icon size="20">mdi-close</v-icon>
-                    </v-btn>
-                  </template>
-                  <p class="text-caption titleColor--text">
-                    پاک کردن شماره کارت
-                  </p>
-                </v-tooltip>
-              </v-col>
-              <v-col cols="6" md="4">
+              <v-col cols="9" md="5">
                 <div
                   class="
                     fill-height
@@ -138,51 +101,46 @@
       </template>
     </v-card-text>
     <v-card-actions>
-      <v-dialog v-model="addCardForm.showDialog" width="400" max-width="90vw">
+      <v-tooltip v-if="!addCardForm.show" bottom color="cardColor darken-3">
         <template #activator="{ on, attrs }">
-          <v-btn text color="titleColor" v-bind="attrs" v-on="on">
+          <v-btn text v-bind="attrs" v-on="on" @click="showAddForm">
             <v-icon size="30">mdi-plus</v-icon>
           </v-btn>
         </template>
-        <template #default="dialog">
-          <v-card color="cardColor">
-            <v-card-title
-              class="pa-2 d-flex justify-space-between align-center"
-            >
-              <p class="titleColor--text text-body-2 font-weight-bold">
-                افزودن شماره کارت
-              </p>
-              <v-btn small text color="error" @click="dialog.value = false">
+        <p class="text-caption titleColor--text">افزودن شماره کارت</p>
+      </v-tooltip>
+      <v-form
+        v-else
+        ref="addForm"
+        v-model="addCardForm.validity"
+        class="width-100"
+        @submit.prevent="addSubmitHandler"
+      >
+        <v-container>
+          <v-row>
+            <v-col cols="12" md="8">
+              <v-text-field
+                v-model="addCardForm.card"
+                v-mask="'####-####-####-####'"
+                outlined
+                dense
+                label="شماره کارت"
+                :rules="[formRuleIsCreditCard]"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="4" sm="2" md="2">
+              <v-btn color="error" dark @click="hideAddForm">
                 <v-icon size="20">mdi-close</v-icon>
               </v-btn>
-            </v-card-title>
-            <v-card-text>
-              <v-form
-                ref="addForm"
-                v-model="addCardForm.validity"
-                @submit.prevent="addCardHandler"
-              >
-                <v-text-field
-                  v-model="addCardForm.card"
-                  v-mask="'####-####-####-####'"
-                  label="شماره کارت"
-                  outlined
-                  dense
-                  :rules="[formRuleIsCreditCard]"
-                ></v-text-field>
-                <v-btn
-                  type="submit"
-                  color="primary"
-                  dark
-                  class="mt-2 mx-auto d-block"
-                  :loading="loading"
-                  >افزودن شماره کارت</v-btn
-                >
-              </v-form>
-            </v-card-text>
-          </v-card>
-        </template>
-      </v-dialog>
+            </v-col>
+            <v-col cols="4" sm="2" md="2">
+              <v-btn type="submit" color="success" dark :loading="loading">
+                <v-icon size="20">mdi-check</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-form>
     </v-card-actions>
     <v-snackbar :value="success" color="success" dark :timeout="2000">
       <p>{{ success }}</p>
@@ -212,15 +170,10 @@ export default {
       loading: false,
       success: '',
       error: '',
-      activeCard: {},
-      editCardForm: {
-        validity: true,
-        card: null,
-      },
       addCardForm: {
         validity: true,
         card: null,
-        showDialog: false,
+        show: false,
       },
     }
   },
@@ -230,38 +183,11 @@ export default {
     },
   },
   methods: {
-    setActiveCard(card) {
-      this.activeCard = card
-      this.editCardForm.card = this.activeCard.card
+    showAddForm() {
+      this.addCardForm.show = true
     },
-    editCardHandler(card) {
-      const refIndex = this.items.findIndex((c, i) => c.id === card.id)
-      this.$refs.editForm[refIndex].validate()
-      if (this.editCardForm.validity) {
-        this.loading = true
-        this.success = ''
-        this.error = ''
-        try {
-          const index = this.items.findIndex(c => c.id === card.id)
-          const cardsCopy = [...this.items]
-          const oldData = { ...cardsCopy[index] }
-          cardsCopy.splice(index, 1)
-          cardsCopy.splice(index, 0, {
-            ...oldData,
-            card: this.editCardForm.card,
-            status: { text: 'در انتظار تایید', value: 'pending' },
-          })
-          this.$emit('update-cards', cardsCopy)
-          this.loading = false
-          this.success = 'شماره کارت با موفقیت ویرایش شد'
-          this.error = ''
-        } catch (err) {
-          this.loading = false
-          this.success = ''
-          this.error =
-            err.response?.data?.message || 'ویرایش شماره کارت با خطا مواجه شد'
-        }
-      }
+    hideAddForm() {
+      this.addCardForm.show = false
     },
     deleteCardHandler(card) {
       this.loading = true
@@ -269,7 +195,7 @@ export default {
       this.error = ''
       try {
         let cardsCopy = [...this.items]
-        cardsCopy = cardsCopy.filter(c => card.id !== c.id)
+        cardsCopy = cardsCopy.filter(sh => card.id !== sh.id)
         this.$emit('update-cards', cardsCopy)
         this.loading = false
         this.success = 'شماره کارت با موفقیت ویرایش شد'
@@ -281,7 +207,7 @@ export default {
           err.response?.data?.message || 'حذف شماره کارت با خطا مواجه شد'
       }
     },
-    addCardHandler() {
+    addSubmitHandler() {
       this.$refs.addForm.validate()
       if (this.addCardForm.validity) {
         this.loading = true
@@ -302,7 +228,7 @@ export default {
           this.success = 'شماره کارت با موفقیت افزوده شد'
           this.error = ''
           this.addCardForm.card = null
-          this.addCardForm.showDialog = false
+          this.addCardForm.show = false
         } catch (err) {
           this.loading = false
           this.success = ''
