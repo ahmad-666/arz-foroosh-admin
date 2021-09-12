@@ -63,7 +63,6 @@
                             outlined
                             label="مقدار درخواستی"
                             :rules="[formRuleIsRequired]"
-                            validate-on-blur
                           >
                           </v-text-field>
                           <div :style="{ width: '200px', 'max-width': '100%' }">
