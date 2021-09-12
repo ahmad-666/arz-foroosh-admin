@@ -18,6 +18,7 @@
     "lottie-vuejs": "^0.4.0",
     "num2persian": "^3.2.2",
     "nuxt": "^2.15.3",
+    "v-mask": "^2.2.4",
     "vue-chartjs": "^3.5.1",
     "vue-persian-datetime-picker": "^2.6.1",
     "vue-quill-editor": "^3.0.6",

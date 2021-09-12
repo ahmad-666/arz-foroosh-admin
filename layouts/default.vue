@@ -59,7 +59,14 @@
       <v-list>
         <v-list-item v-for="sidebarItem in sidebarItems" :key="sidebarItem.key">
           <template v-if="!sidebarItem.items">
-            <v-btn text small nuxt :to="sidebarItem.route" width="100%">
+            <v-btn
+              text
+              small
+              nuxt
+              :to="sidebarItem.route"
+              width="100%"
+              active-class="font-weight-bold secondary--text"
+            >
               <v-list-item-icon>
                 <v-icon size="15">{{ sidebarItem.icon }}</v-icon>
               </v-list-item-icon>
@@ -89,6 +96,7 @@
                     small
                     :to="item.route"
                     class="width-100 transparent elevation-0"
+                    active-class="font-weight-bold secondary--text"
                   >
                     <v-list-item-content>
                       <v-list-item-title class="text-body-2">{{
@@ -102,7 +110,7 @@
           </template>
         </v-list-item>
         <v-list-item>
-          <v-btn text small width="100%" @click="logoutHandler">
+          <v-btn text small width="100%" nuxt to="#!" @click="logoutHandler">
             <v-list-item-icon>
               <v-icon size="15" :style="{ transform: 'rotate(180deg)' }"
                 >mdi-logout</v-icon

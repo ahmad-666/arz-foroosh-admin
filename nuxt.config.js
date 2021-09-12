@@ -19,10 +19,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/styles/global.scss',
-    '~/assets/styles/quill.scss',
-  ],
+  css: ['~/assets/styles/global.scss', '~/assets/styles/quill.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -30,6 +27,7 @@ export default {
     { src: '~/plugins/dateTimePicker.js', mode: 'client' },
     { src: '~/plugins/lottie.js', mode: 'client' },
     { src: '~/plugins/vue-slider-component.js', mode: 'client' },
+    { src: '~/plugins/mask.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -46,9 +44,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    
-  ],
+  modules: [],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
@@ -103,9 +99,8 @@ export default {
     height: '5px',
     rtl: false,
   },
-  env: {
-  },
-  router: { }, // we execute this middleware before all routes
+  env: {},
+  router: {}, // we execute this middleware before all routes
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['num2persian'],
