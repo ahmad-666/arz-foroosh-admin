@@ -150,14 +150,14 @@ export default {
         amount: null,
         price: null,
         gradient:
-          'linear-gradient(to right bottom, #0dbe88, #00c583, #01cc7c, #13d374, #25da6a)',
+          'linear-gradient(134.6deg, rgb(201, 37, 107) 15.4%, rgb(116, 16, 124) 74.7%)',
       },
       sell: {
         validity: true,
         amount: null,
         price: null,
         gradient:
-          'linear-gradient(to right bottom, #d71451, #d91753, #dc1956, #de1c58, #e01e5b)',
+          'linear-gradient(109.6deg, rgb(61, 245, 167) 11.2%, rgb(9, 111, 224) 91.1%)',
       },
     }
   },
