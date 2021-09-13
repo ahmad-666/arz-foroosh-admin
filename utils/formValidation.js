@@ -42,3 +42,28 @@ export const isShaba = val => {
     return 'شماره شبا معتبر نیست (شماره شبا ۲۲رقم است)'
   return true
 }
+export const isMax = (val, max) => {
+  if (+val > +max) {
+    const msg1 = 'حداکثر عدد قابل انتخاب'
+    const msg2 = max
+    const msg3 = 'است'
+    return msg1 + msg2 + msg3
+  }
+  return true
+}
+export const minLength = (val, minLength) => {
+  const errorMsg1 = 'حداقل کاراکتر وارد شده باید'
+  const errorMsg2 = minLength
+  const errorMsg3 = 'عدد باشد'
+  const errorMsg = errorMsg1 + errorMsg2 + errorMsg3
+  if (val === null) return errorMsg
+  else {
+    const valStr = `${val}`
+    if (!valStr || valStr.trim().length < minLength) return errorMsg
+  }
+  return true
+}
+export const isSamePassword = (val1, val2) => {
+  if (val1 === val2) return true
+  return 'مقدار وارد شده با مقدار رمز عبور جدید یکی نیست'
+}

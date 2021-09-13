@@ -63,7 +63,7 @@
                             dense
                             outlined
                             label="مقدار درخواستی"
-                            :rules="[formRuleIsRequired]"
+                            :rules="[formRuleIsRequired, formRuleIsMax]"
                             validate-on-blur
                           >
                           </v-text-field>
@@ -240,7 +240,7 @@
   </v-card>
 </template>
 <script>
-import { isRequired } from '~/utils/formValidation'
+import { isRequired, isMax } from '~/utils/formValidation'
 
 export default {
   data() {
@@ -300,6 +300,9 @@ export default {
     formRuleIsRequired() {
       return isRequired
     },
+    formRuleIsMax() {
+      return isMax(this.withdraw.amount, this.stock)
+    },
     withdrawAmount() {
       return this.withdraw.amount
     },
@@ -316,13 +319,16 @@ export default {
           const totalOffset = this.priceOffset * this.withdraw.amount
           this.receive = this.withdraw.amount - totalOffset
         }
+        if (!val || !this.stock) this.withdraw.withdrawAll = false
+        else if (val.toString() === this.stock.toString())
+          this.withdraw.withdrawAll = true
+        else this.withdraw.withdrawAll = false
       },
     },
     withdrawAll: {
       immediate: true,
       handler(val) {
-        if (!val) this.withdraw.amount = null
-        else {
+        if (val) {
           this.withdraw.amount = this.stock
           this.$refs.amountElm.focus()
           this.$refs.amountElm.blur()

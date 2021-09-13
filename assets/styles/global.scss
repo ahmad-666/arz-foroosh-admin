@@ -171,6 +171,12 @@ body .v-application p {
     margin-top: 0 !important;
   }
 }
+.not-break-title {
+  .v-card__title {
+    word-break: initial !important;
+  }
+}
+
 @media screen and (max-width: 1100px) {
   body {
     font-size: 8px;

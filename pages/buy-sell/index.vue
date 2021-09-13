@@ -32,10 +32,9 @@
           ></v-text-field>
           <v-text-field
             v-model="buy.price"
-            label="مبلغ قابل پرداخت"
+            label="مبلغ قابل پرداخت (تومان)"
             dense
             outlined
-            disabled
           ></v-text-field>
           <v-btn
             type="submit"
@@ -69,10 +68,9 @@
           ></v-text-field>
           <v-text-field
             v-model="sell.price"
-            label="مبلغ قابل دریافت"
+            label="مبلغ قابل دریافت (تومان)"
             dense
             outlined
-            disabled
           ></v-text-field>
           <v-btn
             type="submit"
@@ -165,18 +163,6 @@ export default {
     formRuleIsRequired() {
       return isRequired
     },
-    triggerBuyPriceChanger() {
-      return {
-        tether: this.tetherPrice,
-        amount: this.buy.amount,
-      }
-    },
-    triggerSellPriceChanger() {
-      return {
-        tether: this.tetherPrice,
-        amount: this.sell.amount,
-      }
-    },
     isSmallScreen() {
       return this.$vuetify.breakpoint.smAndDown
     },
@@ -211,37 +197,95 @@ export default {
         }
       } else return null
     },
+    buyAmount() {
+      return this.buy.amount
+    },
+    buyPrice() {
+      return this.buy.price
+    },
+    sellAmount() {
+      return this.sell.amount
+    },
+    sellPrice() {
+      return this.sell.price
+    },
   },
   watch: {
-    triggerBuyPriceChanger: {
-      deep: true,
+    tetherPrice: {
       immediate: true,
-      handler({ tether, amount }) {
-        if (!tether || !amount) this.buy.price = '0 تومان'
-        else
-          this.buy.price = `${new Intl.NumberFormat().format(
-            tether * amount
-          )} تومان`
+      handler(val) {
+        if (!val) {
+          this.buy.amount = 0
+          this.buy.price = 0
+          this.sell.amount = 0
+          this.sell.price = 0
+        } else {
+          if (this.buy.price) {
+            this.buy.amount = +this.buy.price.replace(/,/gim, '') / +val
+          }
+          if (this.buy.amount) {
+            this.buy.price = new Intl.NumberFormat().format(
+              +this.buy.amount * +val
+            )
+          }
+          if (this.sell.price) {
+            this.sell.amount = +this.sell.price.replace(/,/gim, '') / +val
+          }
+          if (this.sell.amount) {
+            this.sell.price = new Intl.NumberFormat().format(
+              +this.sell.amount * +val
+            )
+          }
+        }
       },
     },
-    triggerSellPriceChanger: {
-      deep: true,
+    buyAmount: {
       immediate: true,
-      handler({ tether, amount }) {
-        if (!tether || !amount) this.sell.price = '0 تومان'
+      handler(val) {
+        if (!val || !this.tetherPrice) this.buy.price = 0
         else
-          this.sell.price = `${new Intl.NumberFormat().format(
-            tether * amount
-          )} تومان`
+          this.buy.price = new Intl.NumberFormat().format(
+            +val * +this.tetherPrice
+          )
+      },
+    },
+    buyPrice: {
+      immediate: true,
+      handler(val) {
+        if (!val || !this.tetherPrice) this.buy.amount = 0
+        else {
+          const convertedVal = val.replace(/,/gim, '')
+          this.buy.amount = +convertedVal / +this.tetherPrice
+        }
+      },
+    },
+    sellAmount: {
+      immediate: true,
+      handler(val) {
+        if (!val || !this.tetherPrice) this.sell.price = 0
+        else
+          this.sell.price = new Intl.NumberFormat().format(
+            +val * +this.tetherPrice
+          )
+      },
+    },
+    sellPrice: {
+      immediate: true,
+      handler(val) {
+        if (!val || !this.tetherPrice) this.sell.amount = 0
+        else {
+          const convertedVal = val.replace(/,/gim, '')
+          this.sell.amount = +convertedVal / +this.tetherPrice
+        }
       },
     },
   },
-  mounted() {
-    setInterval(() => {
-      // for simulate socket behaviour
-      this.tetherPrice = Math.floor(Math.random() * 100)
-    }, 5000)
-  },
+  // mounted() {
+  //   setInterval(() => {
+  //     // for simulate socket behaviour
+  //     this.tetherPrice = Math.floor(Math.random() * 100)
+  //   }, 2000)
+  // },
   methods: {
     clearError() {
       this.error = ''
