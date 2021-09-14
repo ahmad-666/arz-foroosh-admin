@@ -136,6 +136,8 @@
 <script>
 import { isRequired } from '~/utils/formValidation'
 export default {
+  layout: 'dashboard',
+
   data() {
     return {
       loading: false,
@@ -304,7 +306,10 @@ export default {
         this.success = ''
         this.error = ''
         try {
-          this.buy.amount = null
+          this.buy.amount = 0
+          this.buy.price = 0
+          this.sell.amount = 0
+          this.sell.price = 0
           this.$refs.buyForm.resetValidation()
           this.loading = false
           this.success = 'ثبت درخواست خرید با موفقیت انجام شد'

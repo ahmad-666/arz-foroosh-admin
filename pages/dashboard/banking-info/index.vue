@@ -31,6 +31,8 @@ export default {
     BaseShaba,
     BaseBankAccount,
   },
+  layout: 'dashboard',
+
   data() {
     return {
       loading: true,

@@ -26,7 +26,7 @@
                 color="secondary"
                 dark
                 nuxt
-                to="/invite-conditions"
+                to="/dashboard/invite-conditions"
                 class="mt-4 text-body-2"
                 >شرایط معرفی دوستان</v-btn
               >
@@ -102,6 +102,8 @@ export default {
     InviteStatistics,
     InviteEnter,
   },
+  layout: 'dashboard',
+
   data() {
     return {
       visibleComponent: null,

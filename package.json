@@ -12,6 +12,7 @@
     "lint": "npm run lint:js && npm run lint:style"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.4.1",
     "axios": "^0.21.1",
     "chart.js": "^2.9.4",
     "core-js": "^3.9.1",

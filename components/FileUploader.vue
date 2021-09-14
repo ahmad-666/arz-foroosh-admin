@@ -137,7 +137,7 @@ export default {
   },
   computed: {
     primaryColor() {
-      return this.$vuetify.theme.themes.dark.primary
+      return this.$vuetify.theme.themes.light.primary
     },
   },
   methods: {

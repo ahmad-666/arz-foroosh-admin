@@ -245,6 +245,7 @@ export default {
   components: {
     FileUploader,
   },
+  layout: 'dashboard',
   data() {
     return {
       step: 1,

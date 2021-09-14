@@ -43,6 +43,7 @@
               'background-color':
                 share === activeShare ? vuetifyPrimaryColor : 'transparent',
               border: share === activeShare ? 'none' : '1px solid #bbb',
+              color: share === activeShare ? 'white' : '#888',
             }"
             @click="setShare(share)"
           >
@@ -114,7 +115,7 @@ export default {
   },
   computed: {
     vuetifyPrimaryColor() {
-      return this.$vuetify.theme.themes.dark.primary
+      return this.$vuetify.theme.themes.light.primary
     },
   },
   watch: {

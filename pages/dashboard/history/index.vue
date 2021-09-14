@@ -1,5 +1,5 @@
 <template>
-  <v-card color="cardColor" dark>
+  <v-card color="cardColor">
     <v-card-title class="text-subtitle-1 font-weight-bold white--text">
       تاریخچه معاملات
     </v-card-title>
@@ -64,6 +64,8 @@
 </template>
 <script>
 export default {
+  layout: 'dashboard',
+
   data() {
     return {
       loading: false,

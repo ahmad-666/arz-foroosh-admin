@@ -123,6 +123,7 @@
 <script>
 import { isRequired, minLength, isSamePassword } from '~/utils/formValidation'
 export default {
+  layout: 'dashboard',
   data() {
     return {
       loading: false,

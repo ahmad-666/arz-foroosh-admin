@@ -195,6 +195,8 @@
 <script>
 import { isRequired } from '~/utils/formValidation'
 export default {
+  layout: 'dashboard',
+
   data() {
     return {
       loading: false,

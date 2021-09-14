@@ -147,6 +147,12 @@ body .v-application p {
 .position-absolute {
   position: absolute !important;
 }
+.pos-center {
+  right: 50%;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+
 .top-right-edge {
   top: 0 !important;
   right: 0 !important;
@@ -166,6 +172,19 @@ body .v-application p {
 .direction-ltr {
   direction: ltr !important;
 }
+.direction-rtl {
+  direction: rtl !important;
+}
+.input-direction-ltr {
+  input {
+    direction: ltr !important;
+  }
+}
+.input-direction-rtl {
+  input {
+    direction: rtl !important;
+  }
+}
 .with-copy-icon {
   .v-input__append-inner {
     margin-top: 0 !important;
@@ -176,7 +195,50 @@ body .v-application p {
     word-break: initial !important;
   }
 }
-
+.border-top-light {
+  border-top: 1px solid darken(white, 8%) !important;
+}
+.border-bottom-light {
+  border-bottom: 1px solid darken(white, 8%) !important;
+}
+.border-left-light {
+  border-left: 1px solid darken(white, 8%) !important;
+}
+.border-right-light {
+  border-right: 1px solid darken(white, 8%) !important;
+}
+.border-top-dark {
+  border-top: 1px solid lighten(black, 40%) !important;
+}
+.border-bottom-dark {
+  border-bottom: 1px solid lighten(black, 40%) !important;
+}
+.border-left-dark {
+  border-left: 1px solid lighten(black, 40%) !important;
+}
+.border-right-dark {
+  border-right: 1px solid lighten(black, 40%) !important;
+}
+.border-dark {
+  border: 1px solid darken(white, 75%) !important;
+  border-color: darken(white, 75%) !important;
+}
+.border-light {
+  border: 1px solid lighten(black, 80%) !important;
+  border-color: lighten(black, 80%) !important;
+}
+.no-solo-shadow {
+  .v-input__slot {
+    box-shadow: none !important;
+  }
+}
+.theme--light.v-pagination
+  .v-pagination__item:not(.v-pagination__item--active) {
+  background-color: #eee !important;
+}
+.theme--light.v-pagination .v-pagination__navigation {
+  background-color: #eee !important;
+}
 @media screen and (max-width: 1100px) {
   body {
     font-size: 8px;
