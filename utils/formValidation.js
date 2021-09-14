@@ -10,6 +10,11 @@ export const isSSN = val => {
   if (val.length !== 10) return 'شماره ملی معتبر نیست'
   else return true
 }
+export const isEnterSSN = val => {
+  if (val === null || val === '') return true
+  if (val.length !== 10) return 'شماره ملی معتبر نیست'
+  else return true
+}
 export const isMobile = val => {
   if (val === null) return 'موبایل معتبر نیست (با ۰۹ شروع کنید)'
   const valStr = `${val}`
@@ -22,8 +27,22 @@ export const isMobile = val => {
     return 'موبایل معتبر نیست (با ۰۹ شروع کنید)'
   return true
 }
+export const isEnterMobile = val => {
+  if (val === null || val === '') return true
+  const valStr = `${val}`
+  if (!valStr.startsWith('09') || valStr.length !== 11)
+    return 'موبایل معتبر نیست (با ۰۹ شروع کنید)'
+  return true
+}
 export const isEmail = val => {
   if (val === null) return 'ایمیل معتبر نیست'
+  const regEx =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+  if (!regEx.test(val)) return 'ایمیل معتبر نیست'
+  return true
+}
+export const isEnterEmail = val => {
+  if (val === null || val === '') return true
   const regEx =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   if (!regEx.test(val)) return 'ایمیل معتبر نیست'

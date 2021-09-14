@@ -239,6 +239,11 @@ body .v-application p {
 .theme--light.v-pagination .v-pagination__navigation {
   background-color: #eee !important;
 }
+.relative-right-center {
+  position: relative;
+  right: 50%;
+  transform: translateX(50%);
+}
 @media screen and (max-width: 1100px) {
   body {
     font-size: 8px;

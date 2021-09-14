@@ -15,7 +15,12 @@
           <v-img src="/imgs/logo.png" width="40px" max-height="95%"></v-img>
           <v-app-bar-title class="text-body-2">نام سایت</v-app-bar-title>
         </v-btn>
-        <v-btn color="secondary" dark nuxt to="/dashboard/authorize"
+        <v-btn
+          v-if="!isSmallScreen"
+          color="secondary"
+          dark
+          nuxt
+          to="/dashboard/authorize"
           >احراز هویت</v-btn
         >
       </div>
@@ -45,7 +50,7 @@
           </template>
           <p class="text-caption titleColor--text">اطلاعیه ها</p>
         </v-tooltip>
-        <v-tooltip bottom color="cardColor">
+        <v-tooltip v-if="!isSmallScreen" bottom color="cardColor">
           <template #activator="{ on, attrs }">
             <v-btn text v-bind="attrs" small v-on="on" @click="logoutHandler">
               <v-icon size="25" :style="{ transform: 'rotate(180deg)' }"
@@ -76,7 +81,7 @@
               nuxt
               :to="sidebarItem.route"
               width="100%"
-              active-class="font-weight-bold secondary--text"
+              exact-active-class="font-weight-bold secondary--text"
             >
               <v-list-item-icon>
                 <v-icon size="15">{{ sidebarItem.icon }}</v-icon>
@@ -151,6 +156,12 @@ export default {
       showSidebar: false,
       sidebarItems: [
         {
+          id: 'dashboard',
+          icon: 'mdi-monitor-dashboard',
+          text: 'داشبورد',
+          route: '/dashboard',
+        },
+        {
           id: 'buy-sell',
           icon: 'mdi-shopping-outline',
           text: 'خرید و فروش تتر',
@@ -209,6 +220,12 @@ export default {
           route: '/dashboard/invite',
         },
         {
+          id: 'authorize',
+          icon: 'mdi-shield-account-outline',
+          text: 'احراز هویت',
+          route: '/dashboard/authorize',
+        },
+        {
           id: 'profile',
           icon: 'mdi-account-box-outline',
           text: 'حساب کاربری',
@@ -224,6 +241,9 @@ export default {
   computed: {
     backgroundColor() {
       return this.$vuetify.theme.themes.light.backgroundColor
+    },
+    isSmallScreen() {
+      return this.$vuetify.breakpoint.smAndDown
     },
   },
   methods: {
