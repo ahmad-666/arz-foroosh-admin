@@ -61,7 +61,9 @@
 <script>
 export default {
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -125,17 +127,17 @@ export default {
         pageSizes: [10, 25, 50, 100],
         totalLength: 0,
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
-      this.table.items = []
-      this.table.totalLength = 100
+      this.table.items = [];
+      this.table.totalLength = 100;
       for (let i = 0; i < 100; i++) {
-        const randVal = Math.random()
+        const randVal = Math.random();
         this.table.items.push({
           id: i,
           type: {
@@ -149,41 +151,46 @@ export default {
           code: randVal < 0.5 ? '123#456' : null,
           amount: '10000 تتر',
           date: '1400/10/10',
-        })
+        });
       }
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - تراکنش ها',
+    };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.table.totalLength / this.table.pageSize)
+      return Math.ceil(this.table.totalLength / this.table.pageSize);
     },
   },
   methods: {
     getChipColor(val) {
       switch (val) {
         case 'deposit':
-          return 'success'
+          return 'success';
         case 'withdraw':
-          return 'error'
+          return 'error';
         default:
-          return 'grey'
+          return 'grey';
       }
     },
     changePageHandler() {
-      this.$fetch()
+      this.$fetch();
     },
     changePageSizeHandler() {
-      this.table.page = 1
-      this.$fetch()
+      this.table.page = 1;
+      this.$fetch();
     },
   },
-}
+};
 </script>

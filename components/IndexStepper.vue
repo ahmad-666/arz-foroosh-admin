@@ -202,7 +202,7 @@
   </v-stepper>
 </template>
 <script>
-import { isRequired } from '~/utils/formValidation'
+import { isRequired } from '~/utils/formValidation';
 export default {
   data() {
     return {
@@ -216,7 +216,7 @@ export default {
       sellMultiplier: null, //
       buySellShowSnackbar: false,
       buySellFormValidity: true,
-    }
+    };
   },
   fetch() {
     this.steps = [
@@ -244,70 +244,70 @@ export default {
         text: 'پایان تراکنش',
         step: 4,
       },
-    ]
-    this.buyMultiplier = 1000
-    this.sellMultiplier = 900
+    ];
+    this.buyMultiplier = 1000;
+    this.sellMultiplier = 900;
   },
   computed: {
     formRequired() {
-      return isRequired
+      return isRequired;
     },
     buySellSnackbarText() {
-      const buyText = 'نوع تبادل به خرید تتر تغییر کرد'
-      const sellText = 'نوع تبادل به فروش تتر تغییر کرد'
-      return this.buySellMode === 'buy-tether' ? buyText : sellText
+      const buyText = 'نوع تبادل به خرید تتر تغییر کرد';
+      const sellText = 'نوع تبادل به فروش تتر تغییر کرد';
+      return this.buySellMode === 'buy-tether' ? buyText : sellText;
     },
     tetherText() {
-      const buyText = 'دریافت میکنید'
-      const sellText = 'پرداخت میکنید'
-      return this.buySellMode === 'buy-tether' ? buyText : sellText
+      const buyText = 'دریافت میکنید';
+      const sellText = 'پرداخت میکنید';
+      return this.buySellMode === 'buy-tether' ? buyText : sellText;
     },
     toomanText() {
-      const buyText = 'پرداخت میکنید'
-      const sellText = 'دریافت میکنید'
-      return this.buySellMode === 'buy-tether' ? buyText : sellText
+      const buyText = 'پرداخت میکنید';
+      const sellText = 'دریافت میکنید';
+      return this.buySellMode === 'buy-tether' ? buyText : sellText;
     },
     buySellColor() {
-      return this.buySellMode === 'buy-tether' ? 'primary' : 'error'
+      return this.buySellMode === 'buy-tether' ? 'primary' : 'error';
     },
     isMdAndUp() {
-      return this.$vuetify.breakpoint.mdAndUp
+      return this.$vuetify.breakpoint.mdAndUp;
     },
   },
   watch: {
     buySellMode(val) {
-      this.buySellShowSnackbar = true
+      this.buySellShowSnackbar = true;
     },
     tether(val) {
       if (this.buySellMode === 'buy-tether')
-        this.tooman = val * this.buyMultiplier
+        this.tooman = val * this.buyMultiplier;
       else if (this.buySellMode === 'sell-tether')
-        this.tooman = val * this.sellMultiplier
+        this.tooman = val * this.sellMultiplier;
     },
     tooman(val) {
       if (this.buySellMode === 'buy-tether')
-        this.tether = val / this.buyMultiplier
+        this.tether = val / this.buyMultiplier;
       else if (this.buySellMode === 'sell-tether')
-        this.tether = val / this.sellMultiplier
+        this.tether = val / this.sellMultiplier;
     },
   },
   methods: {
     toggleMode() {
-      if (this.buySellMode === 'buy-tether') this.buySellMode = 'sell-tether'
+      if (this.buySellMode === 'buy-tether') this.buySellMode = 'sell-tether';
       else if (this.buySellMode === 'sell-tether')
-        this.buySellMode = 'buy-tether'
+        this.buySellMode = 'buy-tether';
     },
     changeBuySellMode(mode) {
-      this.buySellMode = mode
+      this.buySellMode = mode;
     },
     buySellSubmitHandler() {
-      this.$refs.buySellForm.validate()
+      this.$refs.buySellForm.validate();
       if (this.buySellFormValidity) {
-        this.step = 3
+        this.step = 3;
       }
     },
   },
-}
+};
 </script>
 <style lang="scss">
 .input-direction-rtl {

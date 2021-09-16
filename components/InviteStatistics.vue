@@ -39,22 +39,22 @@ export default {
       friendsNum: 0,
       friendsTransactionsNum: 0,
       totalWage: 0,
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.error = ''
+    this.loading = true;
+    this.error = '';
     try {
-      this.friendsNum = 5
-      this.friendsTransactionsNum = 20
-      this.totalWage = 50000000
-      this.loading = false
-      this.error = ''
+      this.friendsNum = 5;
+      this.friendsTransactionsNum = 20;
+      this.totalWage = 50000000;
+      this.loading = false;
+      this.error = '';
     } catch (err) {
-      this.loading = false
+      this.loading = false;
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
   },
-}
+};
 </script>

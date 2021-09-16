@@ -105,7 +105,7 @@ import {
   isMobile,
   isEnterEmail,
   isEnterSSN,
-} from '~/utils/formValidation'
+} from '~/utils/formValidation';
 export default {
   props: {
     user: {
@@ -128,7 +128,7 @@ export default {
         email: null,
         mobile: null,
       },
-    }
+    };
   },
   computed: {
     formRules() {
@@ -139,7 +139,7 @@ export default {
         bDate: [],
         email: [isEnterEmail],
         mobile: [isRequired, isMobile],
-      }
+      };
     },
   },
   watch: {
@@ -147,34 +147,34 @@ export default {
       immediate: true,
       deep: true,
       handler({ fName, lName, ssn, bDate, email, mobile }) {
-        this.localUser.fName = fName
-        this.localUser.lName = lName
-        this.localUser.ssn = ssn
-        this.localUser.bDate = bDate
-        this.localUser.email = email
-        this.localUser.mobile = mobile
+        this.localUser.fName = fName;
+        this.localUser.lName = lName;
+        this.localUser.ssn = ssn;
+        this.localUser.bDate = bDate;
+        this.localUser.email = email;
+        this.localUser.mobile = mobile;
       },
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     setReadMode() {
-      this.$emit('set-read-mode')
+      this.$emit('set-read-mode');
     },
     submitEditHandler() {
-      this.$refs.editForm.validate()
+      this.$refs.editForm.validate();
       if (!this.localUser.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          this.$emit('set-read-mode')
+          this.$emit('set-read-mode');
           this.$emit('update-user', {
             fName: this.localUser.fName,
             lName: this.localUser.lName,
@@ -182,19 +182,19 @@ export default {
             bDate: this.localUser.bDate,
             email: this.localUser.email,
             mobile: this.localUser.mobile,
-          })
-          this.loading = false
-          this.success = 'حساب کاربری با موفقیت ویرایش شد'
-          this.error = ''
+          });
+          this.loading = false;
+          this.success = 'حساب کاربری با موفقیت ویرایش شد';
+          this.error = '';
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
             err.response?.data?.message ||
-            'خطایی در حین ویرایش حساب کاربری رخ داد'
+            'خطایی در حین ویرایش حساب کاربری رخ داد';
         }
       }
     },
   },
-}
+};
 </script>

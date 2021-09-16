@@ -165,11 +165,11 @@
   </div>
 </template>
 <script>
-import WhyUs from '~/components/WhyUs.vue'
-import ArticlesCarousel from '~/components/ArticlesCarousel.vue'
-import BaseType from '~/components/BaseType.vue'
-import IndexStepper from '~/components/IndexStepper.vue'
-import BaseCounter from '~/components/BaseCounter.vue'
+import WhyUs from '~/components/WhyUs.vue';
+import ArticlesCarousel from '~/components/ArticlesCarousel.vue';
+import BaseType from '~/components/BaseType.vue';
+import IndexStepper from '~/components/IndexStepper.vue';
+import BaseCounter from '~/components/BaseCounter.vue';
 export default {
   components: {
     WhyUs,
@@ -183,11 +183,11 @@ export default {
       sellPrice: 0,
       buyPrice: 0,
       counters: [],
-    }
+    };
   },
   fetch() {
-    this.sellPrice = 26000
-    this.buyPrice = 25000
+    this.sellPrice = 26000;
+    this.buyPrice = 25000;
     this.counters = [
       {
         id: 1,
@@ -216,15 +216,20 @@ export default {
         symbol: 'B',
         text: 'حجم معاملات',
       },
-    ]
+    ];
+  },
+  head() {
+    return {
+      title: 'ارز فروش',
+    };
   },
 
   computed: {
     isSmallAndUp() {
-      return this.$vuetify.breakpoint.smAndUp
+      return this.$vuetify.breakpoint.smAndUp;
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .rotate-0 {

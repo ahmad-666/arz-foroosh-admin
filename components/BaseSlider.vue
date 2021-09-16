@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import Glide from '@glidejs/glide'
+import Glide from '@glidejs/glide';
 export default {
   props: {
     config: {
@@ -56,11 +56,11 @@ export default {
   },
   emits: ['createGlideIns'],
   mounted() {
-    const glide = new Glide(this.$refs.slider, this.config)
-    glide.mount()
-    this.$emit('createGlideIns', glide)
+    const glide = new Glide(this.$refs.slider, this.config);
+    glide.mount();
+    this.$emit('createGlideIns', glide);
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 @import '@glidejs/glide/dist/css/glide.core.min.css';

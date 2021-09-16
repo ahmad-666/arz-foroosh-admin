@@ -24,29 +24,31 @@
   </v-card>
 </template>
 <script>
-import BaseShaba from '~/components/BaseShaba.vue'
-import BaseBankAccount from '~/components/BaseBankAccount.vue'
+import BaseShaba from '~/components/BaseShaba.vue';
+import BaseBankAccount from '~/components/BaseBankAccount.vue';
 export default {
   components: {
     BaseShaba,
     BaseBankAccount,
   },
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: true,
       error: '',
       shabas: [],
       cards: [],
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.error = ''
+    this.loading = true;
+    this.error = '';
     try {
       for (let i = 0; i < 3; i++) {
-        const randVal = Math.random()
+        const randVal = Math.random();
         this.shabas.push({
           id: i,
           shaba: '1234567890123456789012',
@@ -54,7 +56,7 @@ export default {
             text: randVal < 0.5 ? 'در انتظار تایید' : 'تایید شده',
             value: randVal < 0.5 ? 'pending' : 'confirm',
           },
-        })
+        });
         this.cards.push({
           id: i,
           card: '1234-4567-1234-4567',
@@ -62,24 +64,29 @@ export default {
             text: randVal < 0.5 ? 'در انتظار تایید' : 'تایید شده',
             value: randVal < 0.5 ? 'pending' : 'confirm',
           },
-        })
+        });
       }
-      this.loading = false
-      this.error = ''
+      this.loading = false;
+      this.error = '';
     } catch (err) {
-      this.loading = false
+      this.loading = false;
       this.error =
         err.response?.data?.message ||
-        'دریافت لیست شماره های شبا با خطا مواجه شد'
+        'دریافت لیست شماره های شبا با خطا مواجه شد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - اطلاعات بانکی',
+    };
   },
   methods: {
     updateShabasHandler(shabas) {
-      this.shabas = shabas
+      this.shabas = shabas;
     },
     updateCardsHandler(cards) {
-      this.cards = cards
+      this.cards = cards;
     },
   },
-}
+};
 </script>

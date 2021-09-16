@@ -95,10 +95,13 @@
   </v-container>
 </template>
 <script>
-import ShowProfile from '~/components/ShowProfile.vue'
+import ShowProfile from '~/components/ShowProfile.vue';
 export default {
   components: {
     ShowProfile,
+  },
+  meta: {
+    auth: 'required',
   },
   layout: 'dashboard',
   data() {
@@ -167,12 +170,12 @@ export default {
         min: null,
         max: null,
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
       this.user = {
         fName: 'John',
@@ -182,10 +185,10 @@ export default {
         ssn: '1234567890',
         bDate: '1400/10/10',
         isAuth: true,
-      }
-      this.transactions.items = []
+      };
+      this.transactions.items = [];
       for (let i = 0; i < 6; i++) {
-        const randVal = Math.random()
+        const randVal = Math.random();
         this.transactions.items.push({
           id: i,
           type: {
@@ -199,42 +202,47 @@ export default {
           code: randVal < 0.5 ? '123#456' : null,
           amount: '10000 تتر',
           date: '1400/10/10',
-        })
+        });
       }
       this.tether = {
         price: 30000,
         min: 28000,
         max: 32000,
         percent: 5,
-      }
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      };
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - داشبورد',
+    };
   },
   computed: {
     getPercentColor() {
-      if (this.tether.percent < 0) return 'error'
-      else return 'success'
+      if (this.tether.percent < 0) return 'error';
+      else return 'success';
     },
   },
   methods: {
     getTableChipColor(val) {
       switch (val) {
         case 'deposit':
-          return 'success'
+          return 'success';
         case 'withdraw':
-          return 'error'
+          return 'error';
         default:
-          return 'grey'
+          return 'grey';
       }
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped></style>

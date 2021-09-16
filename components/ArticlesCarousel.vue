@@ -16,9 +16,9 @@
   </base-slider>
 </template>
 <script>
-import ArticleCard from '~/components/ArticleCard.vue'
-import BaseSlider from '~/components/BaseSlider.vue'
-import { articlesCarousel } from '~/config/slider'
+import ArticleCard from '~/components/ArticleCard.vue';
+import BaseSlider from '~/components/BaseSlider.vue';
+import { articlesCarousel } from '~/config/slider';
 export default {
   components: {
     ArticleCard,
@@ -28,31 +28,31 @@ export default {
     return {
       slides: [],
       slider: null,
-    }
+    };
   },
   fetch() {
     for (let i = 0; i < 10; i++) {
-      this.slides[i] = {}
-      this.slides[i].id = i
-      this.slides[i].title = 'درباره کلاهبرداران اینترنتی بدانید'
+      this.slides[i] = {};
+      this.slides[i].id = i;
+      this.slides[i].title = 'درباره کلاهبرداران اینترنتی بدانید';
       this.slides[i].text =
-        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A, adipisci distinctio, qui facilis quae nostrum libero temporibus '
-      this.slides[i].route = `/articles/${i}`
-      const randVal = Math.random()
+        'Lorem, ipsum dolor sit amet consectetur adipisicing elit. A, adipisci distinctio, qui facilis quae nostrum libero temporibus ';
+      this.slides[i].route = `/articles/${i}`;
+      const randVal = Math.random();
       this.slides[i].imgSrc =
         randVal < 0.33
           ? '/imgs/slide1.jpg'
           : randVal > 0.33 && randVal < 0.66
           ? '/imgs/slide2.jpg'
-          : '/imgs/slide3.jpg'
+          : '/imgs/slide3.jpg';
     }
   },
   computed: {
     carouselConfig() {
-      return articlesCarousel
+      return articlesCarousel;
     },
   },
-}
+};
 </script>
 <style lang="scss">
 .custom-carousel {

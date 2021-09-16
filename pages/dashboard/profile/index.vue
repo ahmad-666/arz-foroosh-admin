@@ -44,25 +44,28 @@
   </v-container>
 </template>
 <script>
-import ShowProfile from '~/components/ShowProfile.vue'
-import EditProfile from '~/components/EditProfile.vue'
+import ShowProfile from '~/components/ShowProfile.vue';
+import EditProfile from '~/components/EditProfile.vue';
 export default {
   components: {
     ShowProfile,
     EditProfile,
   },
   layout: 'dashboard',
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       user: {},
       loading: false,
       error: '',
       mode: 'read', // 'read' || 'edit'
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.error = ''
+    this.loading = true;
+    this.error = '';
     try {
       this.user = {
         fName: 'John',
@@ -72,30 +75,35 @@ export default {
         email: 'something@gmail.com',
         mobile: '09150000000',
         isAuth: true,
-      }
-      this.loading = false
-      this.error = ''
+      };
+      this.loading = false;
+      this.error = '';
     } catch (err) {
-      this.loading = false
+      this.loading = false;
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - حساب کاربری',
+    };
   },
   methods: {
     setEditMode() {
-      this.mode = 'edit'
+      this.mode = 'edit';
     },
     setReadMode() {
-      this.mode = 'read'
+      this.mode = 'read';
     },
     updateUser({ fName, lName, ssn, bDate, email, mobile }) {
-      this.user.fName = fName
-      this.user.lName = lName
-      this.user.ssn = ssn
-      this.user.bDate = bDate
-      this.user.email = email
-      this.user.mobile = mobile
+      this.user.fName = fName;
+      this.user.lName = lName;
+      this.user.ssn = ssn;
+      this.user.bDate = bDate;
+      this.user.email = email;
+      this.user.mobile = mobile;
     },
   },
-}
+};
 </script>

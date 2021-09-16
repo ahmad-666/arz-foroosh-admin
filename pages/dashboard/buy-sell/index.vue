@@ -134,10 +134,12 @@
   </v-card>
 </template>
 <script>
-import { isRequired } from '~/utils/formValidation'
+import { isRequired } from '~/utils/formValidation';
 export default {
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -159,57 +161,62 @@ export default {
         gradient:
           'linear-gradient(109.6deg, rgb(61, 245, 167) 11.2%, rgb(9, 111, 224) 91.1%)',
       },
-    }
+    };
+  },
+  head() {
+    return {
+      title: 'ارز فروش - خرید و فروش',
+    };
   },
   computed: {
     formRuleIsRequired() {
-      return isRequired
+      return isRequired;
     },
     isSmallScreen() {
-      return this.$vuetify.breakpoint.smAndDown
+      return this.$vuetify.breakpoint.smAndDown;
     },
     changeModeBtnText() {
-      if (this.mode === 'buy') return 'رفتن به حالت فروش تتر'
-      else return 'رفتن به حالت خرید تتر'
+      if (this.mode === 'buy') return 'رفتن به حالت فروش تتر';
+      else return 'رفتن به حالت خرید تتر';
     },
     changeModeBtnColor() {
-      if (this.mode === 'buy') return 'error'
-      else return 'success'
+      if (this.mode === 'buy') return 'error';
+      else return 'success';
     },
     floatPartInlineStyle() {
       if (!this.isSmallScreen && this.mode === 'buy') {
         return {
           top: '0%',
           left: '0%',
-        }
+        };
       } else if (!this.isSmallScreen && this.mode === 'sell') {
         return {
           top: '0%',
           left: '50%',
-        }
+        };
       } else if (this.isSmallScreen && this.mode === 'buy') {
         return {
           left: '0%',
           bottom: '0%',
-        }
+        };
       } else if (this.isSmallScreen && this.mode === 'sell') {
         return {
           left: '0%',
           bottom: '50%',
-        }
-      } else return null
+        };
+      } else return null;
     },
     buyAmount() {
-      return this.buy.amount
+      return this.buy.amount;
     },
     buyPrice() {
-      return this.buy.price
+      return this.buy.price;
     },
     sellAmount() {
-      return this.sell.amount
+      return this.sell.amount;
     },
     sellPrice() {
-      return this.sell.price
+      return this.sell.price;
     },
   },
   watch: {
@@ -217,26 +224,26 @@ export default {
       immediate: true,
       handler(val) {
         if (!val) {
-          this.buy.amount = 0
-          this.buy.price = 0
-          this.sell.amount = 0
-          this.sell.price = 0
+          this.buy.amount = 0;
+          this.buy.price = 0;
+          this.sell.amount = 0;
+          this.sell.price = 0;
         } else {
           if (this.buy.price) {
-            this.buy.amount = +this.buy.price.replace(/,/gim, '') / +val
+            this.buy.amount = +this.buy.price.replace(/,/gim, '') / +val;
           }
           if (this.buy.amount) {
             this.buy.price = new Intl.NumberFormat().format(
               +this.buy.amount * +val
-            )
+            );
           }
           if (this.sell.price) {
-            this.sell.amount = +this.sell.price.replace(/,/gim, '') / +val
+            this.sell.amount = +this.sell.price.replace(/,/gim, '') / +val;
           }
           if (this.sell.amount) {
             this.sell.price = new Intl.NumberFormat().format(
               +this.sell.amount * +val
-            )
+            );
           }
         }
       },
@@ -244,40 +251,40 @@ export default {
     buyAmount: {
       immediate: true,
       handler(val) {
-        if (!val || !this.tetherPrice) this.buy.price = 0
+        if (!val || !this.tetherPrice) this.buy.price = 0;
         else
           this.buy.price = new Intl.NumberFormat().format(
             +val * +this.tetherPrice
-          )
+          );
       },
     },
     buyPrice: {
       immediate: true,
       handler(val) {
-        if (!val || !this.tetherPrice) this.buy.amount = 0
+        if (!val || !this.tetherPrice) this.buy.amount = 0;
         else {
-          const convertedVal = val.replace(/,/gim, '')
-          this.buy.amount = +convertedVal / +this.tetherPrice
+          const convertedVal = val.replace(/,/gim, '');
+          this.buy.amount = +convertedVal / +this.tetherPrice;
         }
       },
     },
     sellAmount: {
       immediate: true,
       handler(val) {
-        if (!val || !this.tetherPrice) this.sell.price = 0
+        if (!val || !this.tetherPrice) this.sell.price = 0;
         else
           this.sell.price = new Intl.NumberFormat().format(
             +val * +this.tetherPrice
-          )
+          );
       },
     },
     sellPrice: {
       immediate: true,
       handler(val) {
-        if (!val || !this.tetherPrice) this.sell.amount = 0
+        if (!val || !this.tetherPrice) this.sell.amount = 0;
         else {
-          const convertedVal = val.replace(/,/gim, '')
-          this.sell.amount = +convertedVal / +this.tetherPrice
+          const convertedVal = val.replace(/,/gim, '');
+          this.sell.amount = +convertedVal / +this.tetherPrice;
         }
       },
     },
@@ -290,64 +297,64 @@ export default {
   // },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     toggleMode() {
-      this.mode = this.mode === 'buy' ? 'sell' : 'buy'
+      this.mode = this.mode === 'buy' ? 'sell' : 'buy';
     },
     buySubmitHandler() {
-      this.$refs.buyForm.validate()
+      this.$refs.buyForm.validate();
       if (!this.buy.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          this.buy.amount = 0
-          this.buy.price = 0
-          this.sell.amount = 0
-          this.sell.price = 0
-          this.$refs.buyForm.resetValidation()
-          this.loading = false
-          this.success = 'ثبت درخواست خرید با موفقیت انجام شد'
-          this.error = ''
+          this.buy.amount = 0;
+          this.buy.price = 0;
+          this.sell.amount = 0;
+          this.sell.price = 0;
+          this.$refs.buyForm.resetValidation();
+          this.loading = false;
+          this.success = 'ثبت درخواست خرید با موفقیت انجام شد';
+          this.error = '';
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
-            err.response?.data?.message || 'ثبت درخواست با خطا مواجه شد'
+            err.response?.data?.message || 'ثبت درخواست با خطا مواجه شد';
         }
       }
     },
     sellSubmitHandler() {
-      this.$refs.sellForm.validate()
+      this.$refs.sellForm.validate();
       if (!this.sell.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          this.sell.amount = null
-          this.$refs.sellForm.resetValidation()
-          this.loading = false
-          this.success = 'ثبت درخواست فروش با موفقیت انجام شد'
-          this.error = ''
+          this.sell.amount = null;
+          this.$refs.sellForm.resetValidation();
+          this.loading = false;
+          this.success = 'ثبت درخواست فروش با موفقیت انجام شد';
+          this.error = '';
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
-            err.response?.data?.message || 'ثبت درخواست با خطا مواجه شد'
+            err.response?.data?.message || 'ثبت درخواست با خطا مواجه شد';
         }
       }
     },
   },
-}
+};
 </script>
 <style lang="scss" scoped>
 .float-part {

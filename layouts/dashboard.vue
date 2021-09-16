@@ -150,6 +150,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -236,21 +237,47 @@ export default {
         'linear-gradient(to left, #051937, #051c40, #071e49, #0c2152, #13235b)',
       sidebarGradient:
         'linear-gradient(to bottom, #051937, #051c40, #071e49, #0c2152, #13235b)',
-    }
+    };
   },
   computed: {
     backgroundColor() {
-      return this.$vuetify.theme.themes.light.backgroundColor
+      return this.$vuetify.theme.themes.light.backgroundColor;
     },
     isSmallScreen() {
-      return this.$vuetify.breakpoint.smAndDown
+      return this.$vuetify.breakpoint.smAndDown;
     },
+  },
+  created() {
+    axios.interceptors.request.use(
+      req => {
+        return req;
+      }, // will execute for each request even the fail ones
+      err => {
+        return Promise.reject(err);
+      } // execute only for fail requests , fail request not means fail response
+    );
+    axios.interceptors.response.use(
+      res => {
+        return res;
+      }, // will execute for those responses with 2.x.x status codes
+      err => {
+        // will execute for those responses status code outside of 2.x.x range
+        if (err.response.status === 401) {
+          this.$store.dispatch('auth/logout');
+          this.$router.push('/login');
+        }
+        return Promise.reject(err);
+      }
+    );
   },
   methods: {
     toggleSidebar() {
-      this.showSidebar = !this.showSidebar
+      this.showSidebar = !this.showSidebar;
     },
-    logoutHandler() {},
+    async logoutHandler() {
+      await this.$store.dispatch('auth/logout');
+      this.$router.push('/');
+    },
   },
-}
+};
 </script>

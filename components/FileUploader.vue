@@ -133,19 +133,19 @@ export default {
     return {
       file: null,
       imgSrc: null,
-    }
+    };
   },
   computed: {
     primaryColor() {
-      return this.$vuetify.theme.themes.light.primary
+      return this.$vuetify.theme.themes.light.primary;
     },
   },
   methods: {
     fileChangeHandler(e) {
-      this.file = e.target.files[0]
-      if (this.file) this.imgSrc = URL.createObjectURL(this.file)
-      this.$emit('change-file', this.file)
+      this.file = e.target.files[0];
+      if (this.file) this.imgSrc = URL.createObjectURL(this.file);
+      this.$emit('change-file', this.file);
     },
   },
-}
+};
 </script>

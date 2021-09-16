@@ -240,11 +240,13 @@
   </v-card>
 </template>
 <script>
-import { isRequired, isMax } from '~/utils/formValidation'
+import { isRequired, isMax } from '~/utils/formValidation';
 
 export default {
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -279,104 +281,109 @@ export default {
       stock: null,
       priceOffset: null,
       receive: null,
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
-      this.stock = 10
-      this.priceOffset = 0.1
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      this.stock = 10;
+      this.priceOffset = 0.1;
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - برداشت',
+    };
   },
   computed: {
     formRuleIsRequired() {
-      return isRequired
+      return isRequired;
     },
     formRuleIsMax() {
-      return isMax(this.withdraw.amount, this.stock)
+      return isMax(this.withdraw.amount, this.stock);
     },
     withdrawAmount() {
-      return this.withdraw.amount
+      return this.withdraw.amount;
     },
     withdrawAll() {
-      return this.withdraw.withdrawAll
+      return this.withdraw.withdrawAll;
     },
   },
   watch: {
     withdrawAmount: {
       immediate: true,
       handler(val) {
-        if (this.priceOffset === 0) this.receive = val
+        if (this.priceOffset === 0) this.receive = val;
         else {
-          const totalOffset = this.priceOffset * this.withdraw.amount
-          this.receive = this.withdraw.amount - totalOffset
+          const totalOffset = this.priceOffset * this.withdraw.amount;
+          this.receive = this.withdraw.amount - totalOffset;
         }
-        if (!val || !this.stock) this.withdraw.withdrawAll = false
+        if (!val || !this.stock) this.withdraw.withdrawAll = false;
         else if (val.toString() === this.stock.toString())
-          this.withdraw.withdrawAll = true
-        else this.withdraw.withdrawAll = false
+          this.withdraw.withdrawAll = true;
+        else this.withdraw.withdrawAll = false;
       },
     },
     withdrawAll: {
       immediate: true,
       handler(val) {
         if (val) {
-          this.withdraw.amount = this.stock
-          this.$refs.amountElm.focus()
-          this.$refs.amountElm.blur()
+          this.withdraw.amount = this.stock;
+          this.$refs.amountElm.focus();
+          this.$refs.amountElm.blur();
         }
       },
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     withdrawSubmitHandler() {
-      this.$refs.withdraw.validate()
+      this.$refs.withdraw.validate();
       if (!this.withdraw.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.step = 2
+        this.step = 2;
       }
     },
     prevStep() {
-      this.step = 1
+      this.step = 1;
     },
     sendWithdrawReq() {
-      this.loading = true
-      this.success = ''
-      this.error = ''
+      this.loading = true;
+      this.success = '';
+      this.error = '';
       try {
-        this.withdraw.wallet = null
-        this.withdraw.network = 'TRC20'
-        this.withdraw.amount = null
-        this.withdraw.withdrawAll = false
-        this.withdraw.wallet = null
-        this.$refs.withdraw.resetValidation()
-        this.step = 1
-        this.loading = false
-        this.success = 'درخواست برداشت شما با موفقیت ثبت شد'
-        this.error = ''
+        this.withdraw.wallet = null;
+        this.withdraw.network = 'TRC20';
+        this.withdraw.amount = null;
+        this.withdraw.withdrawAll = false;
+        this.withdraw.wallet = null;
+        this.$refs.withdraw.resetValidation();
+        this.step = 1;
+        this.loading = false;
+        this.success = 'درخواست برداشت شما با موفقیت ثبت شد';
+        this.error = '';
       } catch (err) {
-        this.loading = false
-        this.success = ''
+        this.loading = false;
+        this.success = '';
         this.error =
-          err.response?.data?.message || 'خطایی در حین ثبت درخواست رخ داد'
+          err.response?.data?.message || 'خطایی در حین ثبت درخواست رخ داد';
       }
     },
   },
-}
+};
 </script>

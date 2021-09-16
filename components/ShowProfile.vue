@@ -79,25 +79,25 @@ export default {
   },
   emits: ['set-edit-mode'],
   data() {
-    return {}
+    return {};
   },
   computed: {
     isAuth() {
-      return this.user.isAuth
+      return this.user.isAuth;
     },
     isAuthTextColor() {
-      if (this.isAuth) return 'success--text'
-      else return 'error--text'
+      if (this.isAuth) return 'success--text';
+      else return 'error--text';
     },
     isAuthText() {
-      if (this.isAuth) return 'احراز هویت شده'
-      else return 'احراز هویت نشده'
+      if (this.isAuth) return 'احراز هویت شده';
+      else return 'احراز هویت نشده';
     },
   },
   methods: {
     goToEditMode() {
-      this.$emit('set-edit-mode')
+      this.$emit('set-edit-mode');
     },
   },
-}
+};
 </script>

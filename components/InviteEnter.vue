@@ -58,7 +58,7 @@
   </v-card>
 </template>
 <script>
-import { isRequired } from '~/utils/formValidation'
+import { isRequired } from '~/utils/formValidation';
 export default {
   data() {
     return {
@@ -67,40 +67,40 @@ export default {
       success: '',
       code: null,
       validity: null,
-    }
+    };
   },
   computed: {
     formRuleIsRequired() {
-      return isRequired
+      return isRequired;
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     submitCodeHandler() {
-      this.$refs.codeForm.validate()
+      this.$refs.codeForm.validate();
       if (!this.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          this.$refs.codeForm.reset()
-          this.loading = false
-          this.success = 'کد معرف با موفقیت قبت شد'
-          this.error = ''
+          this.$refs.codeForm.reset();
+          this.loading = false;
+          this.success = 'کد معرف با موفقیت قبت شد';
+          this.error = '';
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
-            err.response?.data?.message || 'خطایی در حین ارسال کد رخ داد'
+            err.response?.data?.message || 'خطایی در حین ارسال کد رخ داد';
         }
       }
     },
   },
-}
+};
 </script>

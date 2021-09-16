@@ -121,9 +121,12 @@
   </div>
 </template>
 <script>
-import { isRequired, minLength, isSamePassword } from '~/utils/formValidation'
+import { isRequired, minLength, isSamePassword } from '~/utils/formValidation';
 export default {
   layout: 'dashboard',
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -170,17 +173,17 @@ export default {
           totalLength: 0,
         },
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
-      this.loginHistory.table.items = []
-      this.loginHistory.table.totalLength = 100
+      this.loginHistory.table.items = [];
+      this.loginHistory.table.totalLength = 100;
       for (let i = 0; i < 100; i++) {
-        const randVal = Math.random()
+        const randVal = Math.random();
         this.loginHistory.table.items.push({
           id: i,
           date: '1400/10/10',
@@ -190,17 +193,22 @@ export default {
             value: randVal < 0.5 ? 'success' : 'fail',
             text: randVal < 0.5 ? 'ورود موفق' : 'تلاش ناموفق',
           },
-        })
+        });
       }
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - امنیت',
+    };
   },
   computed: {
     passwordFormRules() {
@@ -221,56 +229,56 @@ export default {
             this.passwordChange.repeatPassword
           ),
         ],
-      }
+      };
     },
     getPaginationLength() {
       return Math.ceil(
         this.loginHistory.table.totalLength / this.loginHistory.table.pageSize
-      )
+      );
     },
   },
   methods: {
     getChipColor(val) {
       switch (val) {
         case 'success':
-          return 'success'
+          return 'success';
         case 'fail':
-          return 'error'
+          return 'error';
         default:
-          return 'grey'
+          return 'grey';
       }
     },
     changePageHandler() {
-      this.$fetch()
+      this.$fetch();
     },
     changePageSizeHandler() {
-      this.loginHistory.table.page = 1
-      this.$fetch()
+      this.loginHistory.table.page = 1;
+      this.$fetch();
     },
     changePasswordHandler() {
-      this.$refs.passwordForm.validate()
+      this.$refs.passwordForm.validate();
       if (!this.passwordChange.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          this.$refs.passwordForm.reset()
-          this.loading = false
-          this.success = 'رمز عبور با موفقیت عوض شد'
-          this.error = ''
+          this.$refs.passwordForm.reset();
+          this.loading = false;
+          this.success = 'رمز عبور با موفقیت عوض شد';
+          this.error = '';
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
             err.response?.data?.message ||
-            'خطایی در حین عوض کردن رمز عبور رخ داد'
+            'خطایی در حین عوض کردن رمز عبور رخ داد';
         }
       }
     },
   },
-}
+};
 </script>

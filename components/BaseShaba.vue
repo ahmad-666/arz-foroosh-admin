@@ -155,7 +155,7 @@
   </v-card>
 </template>
 <script>
-import { isShaba } from '~/utils/formValidation'
+import { isShaba } from '~/utils/formValidation';
 export default {
   props: {
     items: {
@@ -174,46 +174,46 @@ export default {
         shaba: null,
         show: false,
       },
-    }
+    };
   },
   computed: {
     formRuleIsShaba() {
-      return isShaba
+      return isShaba;
     },
   },
   methods: {
     showAddForm() {
-      this.addShabaForm.show = true
+      this.addShabaForm.show = true;
     },
     hideAddForm() {
-      this.addShabaForm.show = false
+      this.addShabaForm.show = false;
     },
     deleteShabaHandler(shaba) {
-      this.loading = true
-      this.success = ''
-      this.error = ''
+      this.loading = true;
+      this.success = '';
+      this.error = '';
       try {
-        let shabasCopy = [...this.items]
-        shabasCopy = shabasCopy.filter(sh => shaba.id !== sh.id)
-        this.$emit('update-shabas', shabasCopy)
-        this.loading = false
-        this.success = 'شماره شبا با موفقیت ویرایش شد'
-        this.error = ''
+        let shabasCopy = [...this.items];
+        shabasCopy = shabasCopy.filter(sh => shaba.id !== sh.id);
+        this.$emit('update-shabas', shabasCopy);
+        this.loading = false;
+        this.success = 'شماره شبا با موفقیت ویرایش شد';
+        this.error = '';
       } catch (err) {
-        this.loading = false
-        this.success = ''
+        this.loading = false;
+        this.success = '';
         this.error =
-          err.response?.data?.message || 'حذف شماره شبا با خطا مواجه شد'
+          err.response?.data?.message || 'حذف شماره شبا با خطا مواجه شد';
       }
     },
     addSubmitHandler() {
-      this.$refs.addForm.validate()
+      this.$refs.addForm.validate();
       if (this.addShabaForm.validity) {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          const shabasCopy = [...this.items]
+          const shabasCopy = [...this.items];
           shabasCopy.push({
             id: Math.random(), // get it from server
             shaba: this.addShabaForm.shaba,
@@ -221,34 +221,34 @@ export default {
               text: 'در انتظار تایید',
               value: 'pending',
             },
-          })
-          this.$emit('update-shabas', shabasCopy)
-          this.loading = false
-          this.success = 'شماره شبا با موفقیت افزوده شد'
-          this.error = ''
-          this.addShabaForm.shaba = null
-          this.addShabaForm.show = false
+          });
+          this.$emit('update-shabas', shabasCopy);
+          this.loading = false;
+          this.success = 'شماره شبا با موفقیت افزوده شد';
+          this.error = '';
+          this.addShabaForm.shaba = null;
+          this.addShabaForm.show = false;
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
-            err.response?.data?.message || 'افزودن شماره شبا با خطا مواجه شد'
+            err.response?.data?.message || 'افزودن شماره شبا با خطا مواجه شد';
         }
       }
     },
     getStatusColor(val) {
       switch (val) {
         case 'pending':
-          return 'warning--text'
+          return 'warning--text';
         case 'confirm':
-          return 'success--text'
+          return 'success--text';
         default:
-          return 'grey--text'
+          return 'grey--text';
       }
     },
     clearError() {
-      this.error = ''
+      this.error = '';
     },
   },
-}
+};
 </script>

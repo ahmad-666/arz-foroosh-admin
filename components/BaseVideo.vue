@@ -50,21 +50,21 @@ export default {
   data() {
     return {
       showPreviewData: true,
-    }
+    };
   },
   watch: {
     showPreviewData(val) {
-      if (val) this.$refs.videoElm.pause()
-      else this.$refs.videoElm.play()
+      if (val) this.$refs.videoElm.pause();
+      else this.$refs.videoElm.play();
     },
   },
   methods: {
     playClick() {
-      this.showPreviewData = false
+      this.showPreviewData = false;
     },
     pauseVideo() {
       // this.showPreviewData = true
     },
   },
-}
+};
 </script>

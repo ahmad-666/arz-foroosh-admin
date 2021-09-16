@@ -91,10 +91,10 @@
   </div>
 </template>
 <script>
-import InviteCreation from '~/components/InviteCreation.vue'
-import InviteCodes from '~/components/InviteCodes.vue'
-import InviteStatistics from '~/components/InviteStatistics.vue'
-import InviteEnter from '~/components/InviteEnter.vue'
+import InviteCreation from '~/components/InviteCreation.vue';
+import InviteCodes from '~/components/InviteCodes.vue';
+import InviteStatistics from '~/components/InviteStatistics.vue';
+import InviteEnter from '~/components/InviteEnter.vue';
 export default {
   components: {
     InviteCreation,
@@ -103,7 +103,9 @@ export default {
     InviteEnter,
   },
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       visibleComponent: null,
@@ -129,12 +131,17 @@ export default {
           text: '  وارد کردن کد دعوت',
         },
       ],
-    }
+    };
+  },
+  head() {
+    return {
+      title: 'ارز فروش - دعوت دوستان',
+    };
   },
   methods: {
     setVisibleComponent(comp) {
-      this.visibleComponent = comp
+      this.visibleComponent = comp;
     },
   },
-}
+};
 </script>

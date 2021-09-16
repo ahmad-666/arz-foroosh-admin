@@ -1,12 +1,42 @@
 <template>
   <v-app>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
+    <div
+      :style="{ width: '100%', 'min-height': '100vh' }"
+      class="d-flex flex-column justify-center align-center"
+    >
+      <template v-if="error.statusCode === 404">
+        <div :style="{ width: '500px', 'max-width': '100%' }">
+          <lottie-animation
+            path="jsons/error-404.json"
+            :loop="true"
+            :auto-play="true"
+            :speed="1"
+          >
+          </lottie-animation>
+        </div>
+        <p class="text-h6 font-weight-bold error--text">
+          صفحه مورد نظر یافت نشد
+        </p>
+        <v-btn class="mt-6" color="accent" dark nuxt to="/">
+          برگشت به صفحه اصلی</v-btn
+        >
+      </template>
+      <template v-else>
+        <div :style="{ width: '500px', 'max-width': '100%' }">
+          <lottie-animation
+            path="jsons/error.json"
+            :loop="true"
+            :auto-play="true"
+            :speed="1"
+          >
+          </lottie-animation>
+        </div>
+        <p class="mt-4 text-h6 font-weight-bold error--text">خطایی بوجود آمد</p>
+        <v-btn class="mt-6" color="accent" dark nuxt to="/">
+          برگشت به صفحه اصلی</v-btn
+        >
+      </template>
+    </div>
   </v-app>
 </template>
 
@@ -19,24 +49,10 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
-    }
-  },
   head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
-      title,
-    }
+      title: 'صفحه خطا',
+    };
   },
-}
+};
 </script>
-
-<style scoped>
-h1 {
-  font-size: 20px;
-}
-</style>

@@ -35,7 +35,7 @@ module.exports = {
     'prettier/prettier': [
       'warn', // by default prettier gives us error , now it will gives us warning
       {
-        semi: false,
+        semi: true,
         tabWidth: 2,
         singleQuote: true,
         arrowParens: 'avoid',

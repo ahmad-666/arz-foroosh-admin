@@ -55,8 +55,8 @@ export default {
   },
   computed: {
     isSmallAndUp() {
-      return this.$vuetify.breakpoint.smAndUp
+      return this.$vuetify.breakpoint.smAndUp;
     },
   },
-}
+};
 </script>

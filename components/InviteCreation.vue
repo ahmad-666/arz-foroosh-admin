@@ -89,68 +89,68 @@ export default {
       shares: [],
       activeShare: null,
       inviteCode: null,
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
-      this.yourWage = 30
+      this.yourWage = 30;
       for (let i = 0; i < this.yourWage / 5 + 1; i++) {
-        this.shares.push(i * 5)
+        this.shares.push(i * 5);
       }
-      this.activeShare = this.shares[0]
-      this.yourShare = this.activeShare
-      this.friendsShare = this.yourWage - this.yourShare
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      this.activeShare = this.shares[0];
+      this.yourShare = this.activeShare;
+      this.friendsShare = this.yourWage - this.yourShare;
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
   },
   computed: {
     vuetifyPrimaryColor() {
-      return this.$vuetify.theme.themes.light.primary
+      return this.$vuetify.theme.themes.light.primary;
     },
   },
   watch: {
     activeShare: {
       immediate: false,
       handler(val) {
-        this.yourShare = val
-        this.friendsShare = this.yourWage - val
+        this.yourShare = val;
+        this.friendsShare = this.yourWage - val;
       },
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     setShare(share) {
-      this.activeShare = share
+      this.activeShare = share;
     },
     createInviteCode() {
-      this.loading = true
-      this.success = ''
-      this.error = ''
+      this.loading = true;
+      this.success = '';
+      this.error = '';
       try {
-        this.inviteCode = `#abc${Math.random()}`
-        this.loading = false
+        this.inviteCode = `#abc${Math.random()}`;
+        this.loading = false;
         this.success =
-          'کد دعوت با موفقیت ساخته شد. میتوانید از بخش کدهای دعوت ساخته شده کد را مشاهده کنید'
-        this.error = ''
+          'کد دعوت با موفقیت ساخته شد. میتوانید از بخش کدهای دعوت ساخته شده کد را مشاهده کنید';
+        this.error = '';
       } catch (err) {
-        this.loading = false
-        this.success = ''
+        this.loading = false;
+        this.success = '';
         this.error =
-          err.response?.data?.message || 'خطایی در حین ایجاد کد دعوت رخ داد'
+          err.response?.data?.message || 'خطایی در حین ایجاد کد دعوت رخ داد';
       }
     },
   },
-}
+};
 </script>

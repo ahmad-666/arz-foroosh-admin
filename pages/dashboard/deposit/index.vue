@@ -193,10 +193,12 @@
   </v-card>
 </template>
 <script>
-import { isRequired } from '~/utils/formValidation'
+import { isRequired } from '~/utils/formValidation';
 export default {
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -229,12 +231,12 @@ export default {
         code: null,
         amount: null,
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.success = ''
-    this.error = ''
+    this.loading = true;
+    this.success = '';
+    this.error = '';
     try {
       this.deposit.walletItems = [
         {
@@ -253,31 +255,36 @@ export default {
           network: 'BEP20',
           wallet: 'Nfd3434DSFDS23123fdfsdf##',
         },
-      ]
-      this.loading = false
-      this.success = ''
-      this.error = ''
+      ];
+      this.loading = false;
+      this.success = '';
+      this.error = '';
     } catch (err) {
-      this.loading = false
-      this.success = ''
+      this.loading = false;
+      this.success = '';
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - واریز',
+    };
   },
   computed: {
     formRuleIsRequired() {
-      return isRequired
+      return isRequired;
     },
     walletLabel() {
-      const msg1 = 'آدرس ولت در شبکه'
-      const msg2 = this.deposit.network
-      return msg1 + msg2
+      const msg1 = 'آدرس ولت در شبکه';
+      const msg2 = this.deposit.network;
+      return msg1 + msg2;
     },
     depositNetWorkWallet() {
       return {
         network: this.deposit.network,
         walletItems: this.deposit.walletItems,
-      }
+      };
     },
   },
   watch: {
@@ -286,51 +293,52 @@ export default {
       deep: true,
       handler({ network, walletItems }) {
         this.deposit.wallet =
-          walletItems.find(wallet => wallet.network === network)?.wallet || null
+          walletItems.find(wallet => wallet.network === network)?.wallet ||
+          null;
       },
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     copyToClipboard() {
-      navigator.clipboard.writeText(this.deposit.wallet)
-      this.success = 'با موفقیت کپی شد'
+      navigator.clipboard.writeText(this.deposit.wallet);
+      this.success = 'با موفقیت کپی شد';
     },
     depositSubmitHandler() {
-      this.$refs.deposit.validate()
+      this.$refs.deposit.validate();
       if (!this.deposit.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.error--text')
-        })
+          this.$vuetify.goTo('.error--text');
+        });
       } else {
-        this.step = 2
+        this.step = 2;
       }
     },
     prevStep() {
-      this.step = 1
+      this.step = 1;
     },
     sendDepositReq() {
-      this.loading = true
-      this.success = ''
-      this.error = ''
+      this.loading = true;
+      this.success = '';
+      this.error = '';
       try {
-        this.step = 1
+        this.step = 1;
         // this.$refs.deposit.reset()
-        this.deposit.network = 'TRC20'
-        this.deposit.code = null
-        this.deposit.amount = null
-        this.loading = false
-        this.success = 'درخواست واریز با موفقیت ثبت شد'
-        this.error = ''
+        this.deposit.network = 'TRC20';
+        this.deposit.code = null;
+        this.deposit.amount = null;
+        this.loading = false;
+        this.success = 'درخواست واریز با موفقیت ثبت شد';
+        this.error = '';
       } catch (err) {
-        this.loading = false
-        this.success = ''
+        this.loading = false;
+        this.success = '';
         this.error =
-          err.response?.data?.message || 'مشکلی در ثبت درخواست بوجود آمد'
+          err.response?.data?.message || 'مشکلی در ثبت درخواست بوجود آمد';
       }
     },
   },
-}
+};
 </script>

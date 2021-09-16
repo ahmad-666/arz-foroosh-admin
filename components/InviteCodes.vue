@@ -134,15 +134,15 @@ export default {
         ],
         items: [],
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.error = ''
+    this.loading = true;
+    this.error = '';
     try {
-      this.defaultCode = '#abc123'
-      this.defaultLink = `www.domain.com/login?code=${this.defaultCode}`
-      this.table.items = []
+      this.defaultCode = '#abc123';
+      this.defaultLink = `www.domain.com/login?code=${this.defaultCode}`;
+      this.table.items = [];
       for (let i = 0; i < 100; i++) {
         this.table.items.push({
           id: i,
@@ -152,24 +152,24 @@ export default {
           friendShare: '15%',
           friendsQuantity: 2,
           totalWage: `${new Intl.NumberFormat().format(5000000)} تومان`,
-        })
+        });
       }
-      this.loading = false
-      this.error = ''
+      this.loading = false;
+      this.error = '';
     } catch (err) {
-      this.loading = false
+      this.loading = false;
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     copyLinkToClipBoard(val) {
-      navigator.clipboard.writeText(val)
-      this.success = 'کد با موفقیت کپی شد'
+      navigator.clipboard.writeText(val);
+      this.success = 'کد با موفقیت کپی شد';
     },
   },
-}
+};
 </script>

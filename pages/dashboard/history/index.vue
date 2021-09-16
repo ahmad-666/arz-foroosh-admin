@@ -65,7 +65,9 @@
 <script>
 export default {
   layout: 'dashboard',
-
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       loading: false,
@@ -115,17 +117,17 @@ export default {
         pageSize: 10,
         totalLength: 0,
       },
-    }
+    };
   },
   fetch() {
-    this.loading = true
-    this.error = ''
+    this.loading = true;
+    this.error = '';
     try {
-      this.table.items = []
-      this.table.totalLength = 0
-      this.table.totalLength = 100
+      this.table.items = [];
+      this.table.totalLength = 0;
+      this.table.totalLength = 100;
       for (let i = 0; i < 100; i++) {
-        const rand = Math.random()
+        const rand = Math.random();
         this.table.items.push({
           id: i,
           quantity: 10,
@@ -136,35 +138,40 @@ export default {
             val: rand < 0.5 ? 'buy' : 'sell',
           },
           date: '10 / 10 / 1400',
-        })
+        });
       }
-      this.loading = false
-      this.error = ''
+      this.loading = false;
+      this.error = '';
     } catch (err) {
-      this.loading = false
+      this.loading = false;
       this.error =
-        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد'
+        err.response?.data?.message || 'خطایی در حین دریافت اطلاعات رخ داد';
     }
+  },
+  head() {
+    return {
+      title: 'ارز فروش - تاریخچه معاملات',
+    };
   },
   computed: {
     totalPages() {
-      return Math.ceil(this.table.totalLength / this.table.pageSize)
+      return Math.ceil(this.table.totalLength / this.table.pageSize);
     },
   },
   methods: {
     clearError() {
-      this.error = ''
+      this.error = '';
     },
     getChildColor(val) {
       switch (val) {
         case 'buy':
-          return 'success'
+          return 'success';
         case 'sell':
-          return 'error'
+          return 'error';
         default:
-          return 'grey'
+          return 'grey';
       }
     },
   },
-}
+};
 </script>

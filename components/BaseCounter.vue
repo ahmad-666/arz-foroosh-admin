@@ -44,28 +44,28 @@ export default {
       counter: 0,
       timerId: null,
       stepNum: 0,
-    }
+    };
   },
   computed: {
     stepsNumber() {
-      return Math.floor((this.max - this.min) / this.step)
+      return Math.floor((this.max - this.min) / this.step);
     },
     timerOffset() {
-      return this.time / this.stepsNumber
+      return this.time / this.stepsNumber;
     },
   },
   mounted() {
     this.timerId = setInterval(() => {
-      this.stepNum++
-      this.counter += this.step
+      this.stepNum++;
+      this.counter += this.step;
       if (this.counter >= this.max || this.stepNum >= this.stepsNumber) {
-        this.counter = this.max
-        clearInterval(this.timerId)
+        this.counter = this.max;
+        clearInterval(this.timerId);
       }
-    }, this.timerOffset)
+    }, this.timerOffset);
   },
   beforeDestroy() {
-    clearInterval(this.timerId)
+    clearInterval(this.timerId);
   },
-}
+};
 </script>

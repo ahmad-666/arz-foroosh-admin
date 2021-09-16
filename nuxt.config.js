@@ -4,10 +4,10 @@ export default {
   mode: 'universal',
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - arz foroosh',
+    titleTemplate: '%s',
     title: 'arz foroosh',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'fa',
     },
     meta: [
       { charset: 'utf-8' },
@@ -15,7 +15,7 @@ export default {
       { hid: 'description', name: 'description', content: '' },
       { name: 'format-detection', content: 'telephone=no' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/png', href: '/imgs/logo.png' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -99,9 +99,8 @@ export default {
     height: '5px',
     rtl: false,
   },
+  router: { middleware: ['autoLogin'] },
   env: {},
-  router: {}, // we execute this middleware before all routes
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: ['num2persian'],
   },

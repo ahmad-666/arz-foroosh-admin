@@ -232,7 +232,7 @@
   </v-card>
 </template>
 <script>
-import FileUploader from '~/components/FileUploader.vue'
+import FileUploader from '~/components/FileUploader.vue';
 import {
   isRequired,
   isSSN,
@@ -240,12 +240,15 @@ import {
   isMobile,
   isCreditCard,
   isShaba,
-} from '~/utils/formValidation'
+} from '~/utils/formValidation';
 export default {
   components: {
     FileUploader,
   },
   layout: 'dashboard',
+  meta: {
+    auth: 'required',
+  },
   data() {
     return {
       step: 1,
@@ -326,72 +329,77 @@ export default {
         shaba: null,
         creditCard: null,
       },
-    }
+    };
+  },
+  head() {
+    return {
+      title: 'ارز فروش - احراز هویت',
+    };
   },
   computed: {
     formRuleRequired() {
-      return isRequired
+      return isRequired;
     },
     formRuleSSN() {
-      return isSSN
+      return isSSN;
     },
     formRuleIsEmail() {
-      return isEmail
+      return isEmail;
     },
     formRuleIsMobile() {
-      return isMobile
+      return isMobile;
     },
     formRuleIsCreditCard() {
-      return isCreditCard
+      return isCreditCard;
     },
     formRuleIsShaba() {
-      return isShaba
+      return isShaba;
     },
   },
   methods: {
     changeSsnFile(file) {
-      this.infoForm.ssnImgFile = file
+      this.infoForm.ssnImgFile = file;
     },
     changeSelfieFile(file) {
-      this.infoForm.selfieImgFile = file
+      this.infoForm.selfieImgFile = file;
     },
     infoSubmitHandler() {
-      this.$refs.infoForm.validate()
+      this.$refs.infoForm.validate();
       if (!this.infoForm.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.infoForm .error--text')
-        })
+          this.$vuetify.goTo('.infoForm .error--text');
+        });
       } else if (!this.infoForm.selfieImgFile || !this.infoForm.ssnImgFile)
-        this.infoForm.error = 'باید عکس کارت ملی و سلفی را آپلود کنید'
+        this.infoForm.error = 'باید عکس کارت ملی و سلفی را آپلود کنید';
       else {
-        this.infoForm.error = null
-        this.step = 2
+        this.infoForm.error = null;
+        this.step = 2;
       }
     },
     contactFormHandler() {
-      this.$refs.contactForm.validate()
+      this.$refs.contactForm.validate();
       if (!this.contactForm.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.contactForm .error--text')
-        })
-      } else this.step = 3
+          this.$vuetify.goTo('.contactForm .error--text');
+        });
+      } else this.step = 3;
     },
     contactFormPrevStepHandler() {
-      this.step = 1
+      this.step = 1;
     },
     bankFormHandler() {
-      this.$refs.bankForm.validate()
+      this.$refs.bankForm.validate();
       if (!this.bankForm.validity) {
         this.$nextTick(() => {
-          this.$vuetify.goTo('.bankForm .error--text')
-        })
+          this.$vuetify.goTo('.bankForm .error--text');
+        });
       } else {
         // submit all requests here
       }
     },
     bankFormPrevStepHandler() {
-      this.step = 2
+      this.step = 2;
     },
   },
-}
+};
 </script>

@@ -1,0 +1,169 @@
+<template>
+  <div
+    class="width-100 d-flex justify-center align-center"
+    :style="{ 'min-height': '100vh' }"
+  >
+    <v-card color="cardColor" width="400" max-width="100%">
+      <v-card-title
+        class="text-subtitle-1 accent--text font-weight-bold justify-center"
+      >
+        ثبت نام
+      </v-card-title>
+      <v-card-text>
+        <v-form
+          ref="regForm"
+          v-model="validity"
+          @submit.prevent="submitHandler"
+        >
+          <v-text-field
+            v-model="mobile"
+            type="tel"
+            dense
+            outlined
+            label="شماره موبایل"
+            prepend-icon="mdi-cellphone"
+            :rules="formRules.mobile"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            dense
+            outlined
+            label="رمز عبور"
+            prepend-icon="mdi-shield-lock-outline"
+            :rules="formRules.password"
+          ></v-text-field>
+          <v-text-field
+            v-model="passwordRepeat"
+            type="password"
+            dense
+            outlined
+            label="تکرار رمز عبور"
+            prepend-icon="mdi-shield-lock-outline"
+            :rules="formRules.passwordRepeat"
+            @input="inputPasswordRepeatHandler"
+          ></v-text-field>
+          <v-btn
+            color="primary"
+            :loading="loading"
+            dark
+            type="submit"
+            class="mx-auto d-block"
+            >ثبت نام</v-btn
+          >
+        </v-form>
+      </v-card-text>
+      <v-card-actions
+        class="
+          d-flex
+          flex-column
+          align-center
+          flex-sm-row
+          justify-sm-space-between
+        "
+      >
+        <v-btn text color="secondary" nuxt to="/login">
+          ورود به حساب کاربری
+        </v-btn>
+        <v-btn text color="secondary" nuxt to="/forget-password">
+          فراموشی رمز عبور
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-snackbar :value="success" color="success" dark :timeout="2000">
+      <p>{{ success }}</p>
+    </v-snackbar>
+    <v-snackbar :value="error" color="error" dark :timeout="-1">
+      <template #action="{ on, attrs }">
+        <v-btn v-bind="attrs" text v-on="on" @click="clearError">
+          <v-icon size="20">mdi-close</v-icon>
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
+</template>
+<script>
+import {
+  isRequired,
+  isMobile,
+  is6MinLength,
+  isSamePassword,
+} from '~/utils/formValidation';
+export default {
+  layout: 'empty',
+  meta: {
+    auth: 'not-required',
+  },
+  data() {
+    return {
+      validity: true,
+      mobile: null,
+      password: null,
+      passwordRepeat: null,
+      formRules: {
+        mobile: [],
+        password: [],
+        passwordRepeat: [],
+      },
+    };
+  },
+  head() {
+    return {
+      title: 'ارز فروش - ثبت نام',
+    };
+  },
+  computed: {
+    loading() {
+      return this.$store.getters['auth/loading'];
+    },
+    success() {
+      return this.$store.getters['auth/success'];
+    },
+    error() {
+      return this.$store.getters['auth/error'];
+    },
+  },
+  methods: {
+    clearError() {
+      this.error = '';
+    },
+    inputPasswordRepeatHandler() {
+      this.formRules.passwordRepeat = [
+        isRequired,
+        is6MinLength,
+        isSamePassword(this.password, this.passwordRepeat),
+      ];
+    },
+    async submitHandler() {
+      this.formRules = {
+        mobile: [isRequired, isMobile],
+        password: [isRequired, is6MinLength],
+        passwordRepeat: [
+          isRequired,
+          is6MinLength,
+          isSamePassword(this.password, this.passwordRepeat),
+        ],
+      };
+      await this.$nextTick();
+      this.$refs.regForm.validate();
+      if (!this.validity) {
+        this.$nextTick(() => {
+          this.$vuetify.goTo('.error--text');
+        });
+      } else {
+        try {
+          const redirectUrl = await this.$store.dispatch('auth/register', {
+            mobile: this.mobile,
+            password: this.password,
+          });
+          this.$refs.regForm.reset();
+          this.$router.push(redirectUrl);
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error(err);
+        }
+      }
+    },
+  },
+};
+</script>

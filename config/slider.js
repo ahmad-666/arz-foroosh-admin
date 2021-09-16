@@ -29,4 +29,4 @@ export const articlesCarousel = {
     500: { perView: 1.5 },
   },
   bound: true, // remove empty space for slider
-}
+};

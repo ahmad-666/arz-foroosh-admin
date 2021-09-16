@@ -88,7 +88,7 @@
       <v-spacer></v-spacer>
       <div class="d-flex align-center">
         <v-btn
-          v-if="isScreenMdAndUp"
+          v-if="isScreenMdAndUp && !isAuth"
           nuxt
           to="/login"
           rounded
@@ -97,6 +97,17 @@
           :small="!isScreenMdAndUp"
         >
           ورود / ثبت نام
+        </v-btn>
+        <v-btn
+          v-if="isScreenMdAndUp && isAuth"
+          nuxt
+          to="/dashboard"
+          rounded
+          color="primary"
+          dark
+          :small="!isScreenMdAndUp"
+        >
+          حساب کاربری
         </v-btn>
         <v-menu
           v-if="!isScreenMdAndUp"
@@ -116,11 +127,20 @@
               <v-list-item-content class="py-0">
                 <v-list-item-title>
                   <v-btn
+                    v-if="!isAuth"
                     nuxt
                     to="/login"
                     text
                     class="width-100 justify-start text-body-2"
                     >ورود و ثبت نام</v-btn
+                  >
+                  <v-btn
+                    v-if="isAuth"
+                    nuxt
+                    to="/dashboard"
+                    text
+                    class="width-100 justify-start text-body-2"
+                    >حساب کاربری</v-btn
                   >
                 </v-list-item-title>
               </v-list-item-content>
@@ -449,18 +469,21 @@ export default {
           route: '/',
         },
       ],
-    }
+    };
   },
   computed: {
     isScreenMdAndUp() {
-      return this.$vuetify.breakpoint.mdAndUp
+      return this.$vuetify.breakpoint.mdAndUp;
     },
     backgroundColor() {
-      return this.$vuetify.theme.themes.light.backgroundColor
+      return this.$vuetify.theme.themes.light.backgroundColor;
       // const isDark = this.$vuetify.theme.dark
       // if (isDark) return this.$vuetify.theme.themes.dark.backgroundColor
       // else return this.$vuetify.theme.themes.light.backgroundColor
     },
+    isAuth() {
+      return this.$store.getters['auth/isAuth'];
+    },
   },
-}
+};
 </script>

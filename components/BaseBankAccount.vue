@@ -156,7 +156,7 @@
   </v-card>
 </template>
 <script>
-import { isCreditCard } from '~/utils/formValidation'
+import { isCreditCard } from '~/utils/formValidation';
 export default {
   props: {
     items: {
@@ -175,46 +175,46 @@ export default {
         card: null,
         show: false,
       },
-    }
+    };
   },
   computed: {
     formRuleIsCreditCard() {
-      return isCreditCard
+      return isCreditCard;
     },
   },
   methods: {
     showAddForm() {
-      this.addCardForm.show = true
+      this.addCardForm.show = true;
     },
     hideAddForm() {
-      this.addCardForm.show = false
+      this.addCardForm.show = false;
     },
     deleteCardHandler(card) {
-      this.loading = true
-      this.success = ''
-      this.error = ''
+      this.loading = true;
+      this.success = '';
+      this.error = '';
       try {
-        let cardsCopy = [...this.items]
-        cardsCopy = cardsCopy.filter(sh => card.id !== sh.id)
-        this.$emit('update-cards', cardsCopy)
-        this.loading = false
-        this.success = 'شماره کارت با موفقیت ویرایش شد'
-        this.error = ''
+        let cardsCopy = [...this.items];
+        cardsCopy = cardsCopy.filter(sh => card.id !== sh.id);
+        this.$emit('update-cards', cardsCopy);
+        this.loading = false;
+        this.success = 'شماره کارت با موفقیت ویرایش شد';
+        this.error = '';
       } catch (err) {
-        this.loading = false
-        this.success = ''
+        this.loading = false;
+        this.success = '';
         this.error =
-          err.response?.data?.message || 'حذف شماره کارت با خطا مواجه شد'
+          err.response?.data?.message || 'حذف شماره کارت با خطا مواجه شد';
       }
     },
     addSubmitHandler() {
-      this.$refs.addForm.validate()
+      this.$refs.addForm.validate();
       if (this.addCardForm.validity) {
-        this.loading = true
-        this.success = ''
-        this.error = ''
+        this.loading = true;
+        this.success = '';
+        this.error = '';
         try {
-          const cardsCopy = [...this.items]
+          const cardsCopy = [...this.items];
           cardsCopy.push({
             id: Math.random(), // get it from server
             card: this.addCardForm.card,
@@ -222,34 +222,34 @@ export default {
               text: 'در انتظار تایید',
               value: 'pending',
             },
-          })
-          this.$emit('update-cards', cardsCopy)
-          this.loading = false
-          this.success = 'شماره کارت با موفقیت افزوده شد'
-          this.error = ''
-          this.addCardForm.card = null
-          this.addCardForm.show = false
+          });
+          this.$emit('update-cards', cardsCopy);
+          this.loading = false;
+          this.success = 'شماره کارت با موفقیت افزوده شد';
+          this.error = '';
+          this.addCardForm.card = null;
+          this.addCardForm.show = false;
         } catch (err) {
-          this.loading = false
-          this.success = ''
+          this.loading = false;
+          this.success = '';
           this.error =
-            err.response?.data?.message || 'افزودن شماره کارت با خطا مواجه شد'
+            err.response?.data?.message || 'افزودن شماره کارت با خطا مواجه شد';
         }
       }
     },
     getStatusColor(val) {
       switch (val) {
         case 'pending':
-          return 'warning--text'
+          return 'warning--text';
         case 'confirm':
-          return 'success--text'
+          return 'success--text';
         default:
-          return 'grey--text'
+          return 'grey--text';
       }
     },
     clearError() {
-      this.error = ''
+      this.error = '';
     },
   },
-}
+};
 </script>

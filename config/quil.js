@@ -22,4 +22,4 @@ export default {
       ['clean'], // remove any formatting that selected text has
     ],
   },
-}
+};
